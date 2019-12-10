@@ -14,6 +14,14 @@ function delegateEvent(fromElement, eventName, targetSelector, callback) {
 }
 
 
+function onKeyUp(){      
+  fromElement.addEventListener ((event)=>{
+    this.create.bind(this)
+  })
+
+}
+
+
 
 /*global jQuery, Handlebars, Router */
 jQuery(function($) {
@@ -72,13 +80,23 @@ jQuery(function($) {
       }).init('/all');
     },
     bindEvents: function() {
-      $('.new-todo').on('keyup', this.create.bind(this));
-      $('.toggle-all').on('change', this.toggleAll.bind(this));
-      $('.footer').on(
-        'click',
-        '.clear-completed',
-        this.destroyCompleted.bind(this)
-      );
+
+      var x = document.querySelector('.new-todo')
+      x.addEventListener('keyup',this.create.bind(this));
+    // $('.new-todo').on('keyup', this.create.bind(this));
+
+      var y = document.querySelector('.toggle-all')
+      y.addEventListener('change',this.toggleAll.bind(this))
+    // $('.toggle-all').on('change', this.toggleAll.bind(this));
+
+
+    var footer = document.querySelector('footer')
+    footer.addEventListener('click',  this.destroyCompleted.bind(this))
+   
+
+      //$('.footer').on('click',  '.clear-completed',this.destroyCompleted.bind(this) );
+
+      
       $('.todo-list')
       delegateEvent(document.querySelector(".todo-list"), 'change', '.toggle', this.toggle.bind(this))
       delegateEvent(document.querySelector(".main"), 'dblclick', 'label', this.editingMode.bind(this))
@@ -95,7 +113,9 @@ jQuery(function($) {
     render: function() {
       var todos = this.getFilteredTodos();
 
-      $('.todo-list').html(this.todoTemplate(todos));
+      document.querySelector('.todo-list').html(this.todoTemplate(todos));
+
+     // $('.todo-list').html(this.todoTemplate(todos));
       $('.main').toggle(todos.length > 0);
       $('.toggle-all').prop('checked', this.getActiveTodos().length === 0);
       this.renderFooter();
