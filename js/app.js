@@ -1,6 +1,8 @@
 // ! This is a helper function to delegate events from an element to any child with a specified selector.
 // ? Use where required.
 
+
+
 function delegateEvent(fromElement, eventName, targetSelector, callback) {
   fromElement.addEventListener(eventName, event => {
     let targetsList = [...event.currentTarget.querySelectorAll(targetSelector)];
@@ -10,6 +12,8 @@ function delegateEvent(fromElement, eventName, targetSelector, callback) {
     }
   });
 }
+
+
 
 /*global jQuery, Handlebars, Router */
 jQuery(function($) {
@@ -76,6 +80,7 @@ jQuery(function($) {
         this.destroyCompleted.bind(this)
       );
       $('.todo-list')
+<<<<<<< HEAD
       delegateEvent(document.querySelector(".todo-list"), 'change', '.toggle', this.toggle.bind(this))
       delegateEvent(document.querySelector(".main"), 'dblclick', 'label', this.editingMode.bind(this))
       delegateEvent(document.querySelector(".todo-list"), 'keyup', '.edit', this.editKeyup.bind(this))
@@ -88,15 +93,34 @@ jQuery(function($) {
         .on('focusout', '.edit', this.update.bind(this))
         .on('click', '.destroy', this.destroy.bind(this));*/
 
+=======
+     
+         delegateEvent(document.querySelector('.todo-list'), 'change', '.toggle',this.toggle.bind(this))
+         delegateEvent(document.querySelector('.main'), 'dblclick', 'label',this.editingMode.bind(this))
+         delegateEvent(document.querySelector('.toggle-all'), 'keyup', '.edit',this.editKeyup.bind(this))
+         delegateEvent(document.querySelector('.new-todo'), 'focusout', '.edit',this.update.bind(this))
+         delegateEvent(document.querySelector(".todo-list"), 'click', '.destroy',this.destroy.bind(this))
+
+
+
+       /* .on('change', '.toggle', this.toggle.bind(this))
+        .on('dblclick', 'label', this.editingMode.bind(this))
+        .on('keyup', '.edit', this.editKeyup.bind(this))
+        .on('focusout', '.edit', this.update.bind(this))
+        .on('click', '.destroy', this.destroy.bind(this));
+        console.log('binded') */
+>>>>>>> refs/remotes/origin/master
     },
     render: function() {
       var todos = this.getFilteredTodos();
+
       $('.todo-list').html(this.todoTemplate(todos));
       $('.main').toggle(todos.length > 0);
       $('.toggle-all').prop('checked', this.getActiveTodos().length === 0);
       this.renderFooter();
       $('.new-todo').focus();
       util.store('todos-jquery', this.todos);
+      console.log('binded')
     },
     renderFooter: function() {
       var todoCount = this.todos.length;
